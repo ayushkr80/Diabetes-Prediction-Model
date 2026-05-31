@@ -1,124 +1,30 @@
-🩺 Diabetes Prediction Model (SVM-Based)
+# 🩺 Diabetes Prediction Model
 
-📌 Overview
-This project builds a Diabetes Prediction System using a Support Vector Machine (SVM) model.
-It predicts whether a person is diabetic based on medical parameters.
+This repository contains **two diabetes prediction projects**.
 
-The workflow includes:
+## 📁 Structure
 
-Data preprocessing
-Feature standardization
-Model training (SVM)
-Accuracy evaluation
-Real-time prediction system
-🧠 Model Used
-✅ Support Vector Machine (SVM)
-Kernel: linear
-Library: sklearn.svm.SVC
-📂 Project Structure
-Diabetes-Prediction/
-│── Diabetes_prediction_model.ipynb   # Main ML notebook
-│── diabetes.csv                      # Dataset
-│── README.md                         # Documentation
-📊 Dataset Details
+- **`cdc_brfss/`** — Main project. CDC BRFSS dataset (253,680 rows). **86% accuracy, 0.83 ROC-AUC.**
+- **`pima/`** — Original Pima Indians project. Smaller dataset (768 rows), used for learning.
 
-The dataset contains the following features:
+## 🎯 Which one should I look at?
 
-Feature	Description
-Pregnancies	Number of times pregnant
-Glucose	Blood sugar level
-BloodPressure	Blood pressure
-SkinThickness	Skin fold thickness
-Insulin	Insulin level
-BMI	Body Mass Index
-DiabetesPedigreeFunction	Genetic influence
-Age	Age of patient
+Look at **`cdc_brfss/`** for the actual production-quality model. Look at **`pima/`** for the original learning project.
 
-🎯 Target Variable:
+## 🧠 Models used
 
-0 → Non-Diabetic
-1 → Diabetic
-⚙️ Workflow
-1️⃣ Data Collection
-diabetes_dataset = pd.read_csv('diabetes.csv')
-2️⃣ Data Analysis
-Shape of dataset
-Statistical summary (describe())
-Class distribution (value_counts())
-3️⃣ Feature & Label Split
-X = diabetes_dataset.drop(columns='Outcome', axis=1)
-Y = diabetes_dataset['Outcome']
-4️⃣ Data Standardization
-scaler = StandardScaler()
-scaler.fit(X)
-X = scaler.transform(X)
+| Project | Best model | Test accuracy | Test ROC-AUC |
+|---|---|---:|---:|
+| `pima/` | Linear SVM | 77 % | — |
+| `cdc_brfss/` | HistGradientBoosting | **86 %** | **0.83** |
 
-👉 Important: Standardization improves SVM performance.
+## ⚠️ Why two projects?
 
-5️⃣ Train-Test Split
-X_train, X_test, Y_train, Y_test = train_test_split(
-    X, Y, test_size=0.2, stratify=Y, random_state=2
-)
-6️⃣ Model Training
-classifier = svm.SVC(kernel='linear')
-classifier.fit(X_train, Y_train)
-7️⃣ Model Evaluation
-Training Accuracy
-Test Accuracy
-accuracy_score(Y_test, X_test_prediction)
-📈 Results
-✔️ Training Accuracy: High
-✔️ Test Accuracy: Good generalization
+The Pima Indians dataset has only 768 rows and ~49% of its `Insulin` values are missing-disguised-as-zero, so the realistic accuracy ceiling there is ~78%. The CDC BRFSS dataset is 330× larger and clean.
 
-(Exact values depend on dataset run)
+## → Quick start (CDC project)
 
-🔮 Prediction System
-
-Example input:
-
-input_data = (5,166,72,19,175,25.8,0.587,51)
-
-Steps:
-
-Convert to NumPy array
-Reshape
-Standardize
-Predict
-
-Output:
-
-Prediction: Diabetic / Non-Diabetic
-🛠️ Tech Stack
-Python 🐍
-NumPy
-Pandas
-Scikit-learn
-📊 Visual Workflow
-Dataset → Preprocessing → Standardization → Train/Test Split
-        → SVM Model → Evaluation → Prediction
-🚀 How to Run
-1️⃣ Clone Repo
-git clone https://github.com/your-username/diabetes-prediction.git
-cd diabetes-prediction
-2️⃣ Install Dependencies
-pip install numpy pandas scikit-learn
-3️⃣ Run Notebook
-jupyter notebook
-🎯 Future Improvements
-🔥 Deploy using Streamlit (HIGHLY recommended for internships)
-📊 Add visualization dashboard
-⚡ Try other models (Random Forest, XGBoost)
-🧠 Hyperparameter tuning
-🤝 Contributing
-
-Pull requests are welcome!
-Feel free to fork and improve 🚀
-
-👨‍💻 Author
-
-Ayush Kumar
-IIT Bhilai
-
-⭐ If you like this project
-
-Give it a star ⭐ on GitHub — helps a lot in internships!
+```bash
+cd cdc_brfss
+pip install pandas numpy scikit-learn matplotlib joblib jupyter
+jupyter notebook Diabetes_CDC_BRFSS.ipynb
